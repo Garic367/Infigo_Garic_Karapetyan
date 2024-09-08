@@ -106,6 +106,7 @@ public class TopicController : Controller
             throw new ArgumentException($"Item with system name: {systemName} wasn't found!");
         }
         var topicDto = _mapper.Map<TopicEntity, TopicDetailsModel>(topic);
+        
         return View(topicDto);
     }
     [HttpPost]

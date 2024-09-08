@@ -19,10 +19,15 @@ public class ApplicationDbContext : IdentityDbContext
     {
         base.OnConfiguring(optionsBuilder);
     }
-
+    public DbSet<CommentEntity> Comments { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfiguration(new TopicEntityConfiguration());
+        builder.Entity<CommentEntity>().HasOne(c => c.Topic)
+            .WithMany(t => t.Comments)
+            .HasForeignKey(c => c.TopicId);
         base.OnModelCreating(builder);
     }
+    
+    
 }

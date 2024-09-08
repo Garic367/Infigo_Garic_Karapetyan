@@ -24,3 +24,14 @@
         <button type="submit" class="btn btn-primary" style="width: 10%">Submit</button>
     </div>
 </form>
+<form asp-action="AddComment">
+    <div>
+        <label for="FullName">Full Name</label>
+        <input type="text" id="FullName" name="FullName" required />
+    </div>
+    <div>
+        <label for="CommentText">Comment</label>
+        <textarea id="CommentText" name="CommentText" required></textarea>
+    </div>
+    <button type="submit">Submit Comment</button>
+</form>

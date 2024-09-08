@@ -1,5 +1,6 @@
 using CMSPlus.Domain.Entities;
 using CMSPlus.Domain.Interfaces;
+using CMSPlus.Domain.Persistance;
 using CMSPlus.Services.Interfaces;
 
 namespace CMSPlus.Services.Services;
@@ -41,5 +42,17 @@ public class TopicService:ITopicService
     public async Task Delete(int id)
     {
         await _repository.Delete(id);
+    }
+    
+    private readonly ApplicationDbContext _context;
+
+    public TopicService(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+    public async Task AddComment(CommentEntity comment)
+    {
+        _context.Comments.Add(comment);
+        await _context.SaveChangesAsync();
     }
 }

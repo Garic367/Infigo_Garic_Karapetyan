@@ -108,4 +108,31 @@ public class TopicController : Controller
         var topicDto = _mapper.Map<TopicEntity, TopicDetailsModel>(topic);
         return View(topicDto);
     }
+    [HttpPost]
+    public async Task<IActionResult> AddComment(CommentModel comment)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest("Invalid comment data.");
+        }
+
+        var topic = await _topicService.GetById(comment.TopicId);
+        if (topic == null)
+        {
+            return NotFound($"Topic with Id {comment.TopicId} was not found.");
+        }
+
+        var commentEntity = new CommentEntity
+        {
+            FullName = comment.FullName,
+            CommentText = comment.CommentText,
+            TopicId = comment.TopicId
+        };
+
+        await _topicService.AddComment(commentEntity);
+
+        return RedirectToAction("Details", new { systemName = topic.SystemName });
+    }
+
+    
 }
